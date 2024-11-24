@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="he">
+<head>
+    <meta charset="UTF-8">
+    <title>טופס הסכמה מדעת - מחקר בינה מלאכותית בתפקידי משאבי אנוש</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .form-container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .checkbox-group {
+            margin: 10px 0;
+        }
+        .submit-btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+        }
+        .submit-btn:hover {
+            background-color: #45a049;
+        }
+        .error {
+            color: red;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h1>הסכמה מדעת להשתתפות במחקר</h1>
+        <h2>שימוש בבינה מלאכותית בתפקידי משאבי אנוש</h2>
+        
+        <form id="consentForm" onsubmit="return validateForm(event)">
+            <div class="form-group">
+                <label for="fullName">שם פרטי ומשפחה:</label>
+                <input type="text" id="fullName" name="fullName" required>
+            </div>
+
+            <div class="form-group">
+                <label for="id">מספר תעודת זהות:</label>
+                <input type="text" id="id" name="id" pattern="\d{9}" required>
+                <div class="error" id="idError"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="email">כתובת אימייל:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+
+            <div class="form-group">
+                <label for="address">כתובת מגורים:</label>
+                <input type="text" id="address" name="address" required>
+            </div>
+
+            <div class="form-group">
+                <h3>הצהרות הסכמה</h3>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="consent1" name="consent1" required>
+                    <label for="consent1">אני מצהיר/ה בזה כי אני מסכים/ה להשתתף במחקר כמפורט במסמך זה.</label>
+                </div>
+                
+                <div class="checkbox-group">
+                    <input type="checkbox" id="consent2" name="consent2" required>
+                    <label for="consent2">אני מאשר/ת כי הוסבר לי שהחוקרים הראשיים קיבלו אישור מוועדת האתיקה.</label>
+                </div>
+                
+                <div class="checkbox-group">
+                    <input type="checkbox" id="consent3" name="consent3" required>
+                    <label for="consent3">אני מבין/ה כי אני חופשי/ה לבחור שלא להשתתף או להפסיק את השתתפותי בכל עת.</label>
+                </div>
+                
+                <div class="checkbox-group">
+                    <input type="checkbox" id="consent4" name="consent4" required>
+                    <label for="consent4">אני מבין/ה כי זהותי האישית תישמר בסודיות.</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="date">תאריך:</label>
+                <input type="date" id="date" name="date" required>
+            </div>
+
+            <button type="submit" class="submit-btn">שליחת הטופס</button>
+        </form>
+    </div>
+
+    <script>
+        function validateForm(event) {
+            event.preventDefault();
+            
+            // בדיקת תעודת זהות
+            const id = document.getElementById('id').value;
+            if (!/^\d{9}$/.test(id)) {
+                document.getElementById('idError').textContent = 'נא להזין 9 ספרות';
+                return false;
+            }
+            
+            // איסוף הנתונים
+            const formData = {
+                fullName: document.getElementById('fullName').value,
+                id: id,
+                email: document.getElementById('email').value,
+                address: document.getElementById('address').value,
+                date: document.getElementById('date').value,
+                consents: {
+                    consent1: document.getElementById('consent1').checked,
+                    consent2: document.getElementById('consent2').checked,
+                    consent3: document.getElementById('consent3').checked,
+                    consent4: document.getElementById('consent4').checked
+                }
+            };
+
+            // שליחת המידע (כאן תוכלי להוסיף את הלוגיקה לשמירת הנתונים)
+            console.log('נתוני הטופס:', formData);
+            
+            // הצגת הודעת אישור
+            alert('הטופס נשלח בהצלחה!');
+            
+            // איפוס הטופס
+            document.getElementById('consentForm').reset();
+            return false;
+        }
+    </script>
+</body>
+</html>
